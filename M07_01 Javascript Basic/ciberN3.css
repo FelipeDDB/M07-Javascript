@@ -1,0 +1,63 @@
+* {
+    font-size: 25px; 
+    font-family: sans-serif;
+
+}
+/* Marco exterior de la calculadora */
+.marco {
+    position: relative;
+    left: 150px;
+    width: 370px;
+    height: 210px;
+    border: 3px solid olivedrab;
+}
+/* Display de la operación y resultado */
+.marcoResultado {
+    position: relative;
+    left: 150px;
+    margin-top: 10px;
+    width: 370px;
+    border: 3px solid olivedrab;
+    text-align: right;
+    overflow: auto;
+} 
+/* Botones números y operaciones */
+button {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 3px solid olive ;
+}
+button:hover {
+    background-color: olivedrab;
+    color: white;
+}
+.botonIgual {
+    position: absolute;
+    top:10px;
+    right:10px;
+    width: 50px;
+    height: 190px;
+}
+/* Estilo de los operandos y operación */
+.operando {
+    padding-right: 10px; 
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+/* EStilo del resultado */
+#resultado {
+    padding-right: 10px; 
+    font-size: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+/* Estilo de los mensajes */
+#mensaje {
+    position: relative;
+    left: 150px;
+    font-size: 14px;
+    margin-top: 10px;
+    color: red;
+}

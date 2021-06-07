@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M07_02 JavaScript Lletres Repetides (N1-N2)</title>
+</head>
+<body>
+    
+    <!-- Entrada de datos e impresión del resultado del EXERCICI 8 -->
+    <h2> M07_02 JavaScript Lletres Repetides (N1 - N2)</h2>
+
+
+    <script>
+        let nombre = "Felipe";
+
+        // Ex 1 - deletrear texto
+        for (let i = 0; i < nombre.length ; i++) {
+            console.log(nombre[i]);
+        }
+
+        // Ex 2 - Identificar vocal, consonante y números
+        console.log("Partint del nom " + nombre);
+
+        for (let i = 0; i < nombre.length ; i++) {
+            if (esVocal(nombre[i])) {
+                console.log("He trobat la vocal " + nombre[i]);
+            } else if (esConsonante(nombre[i])){
+                console.log("He trobat la consonante " + nombre[i]);
+            } else {
+                if (nombre[i] != " ") {
+                    console.log("Els noms de persones no contenen el caracter  " + nombre[i]);
+                }
+            }
+        }
+
+        function esVocal (letra) {
+            let listaVocales = "aeiouáéíóúàèìòù";
+            if (listaVocales.indexOf(letra.toLowerCase()) == -1) { // indexOf devuelve -1 si no encuentra el caracter en el string
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function esConsonante (letra) {
+            let listaConsonantes = "bcdfghjklmnñpqrstvwxyz";
+            if (listaConsonantes.indexOf(letra.toLowerCase()) == -1) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        /////////////////// FIN EX 2
+
+        // EX 3 - Cuenta letras
+        let nombreArr = nombre.split(''); // Convierte el string en array para poder usar map()
+
+        // Ejecuta la función CuentaLetras para cada elemento del array
+        let contador = nombreArr.map(cuentaLetras);
+        
+        // limpia duplicados y compone el array con el resultado
+        let resultado = limpiaDuplicados();
+        console.log(resultado);
+        
+        function cuentaLetras(letra) {
+            let cont = 0;
+                for (let i = 0; i < nombreArr.length ; i++) {
+                    if (nombreArr[i] == letra) {
+                        cont++;
+                    }
+                }
+                return cont;
+        }
+
+        // limpia duplicados y compone el array con el resultado
+        function limpiaDuplicados() {
+            let tratadas = [];
+            let resultado = [];
+            for (let i = 0; i < nombreArr.length ; i++) {
+                if (tratadas.indexOf(nombreArr[i]) == -1) {     // indexOf devuelve la posición o -1 si no encuentra el caracter en el array
+                    resultado.push(nombreArr[i] + ": " + contador[i]);
+                    tratadas.push(nombreArr[i]);
+                }
+            }
+            return resultado;
+        }
+        /////////////////// FIN EX 3
+
+        // EX 4 - Fusión arrays
+        let name = ["F","e","l","i","p","e"];
+        let surname = ["D","í","a","z"," ","d","e"," ","B","u","r","g","o","s"];
+        let fullName = [];
+
+        name.push(" "); // Añade espacio en blanco al final de name
+        fullName = name.concat(surname); // Concatena name con surname
+        console.log(fullName);
+        
+        /////////////////// FIN EX 4
+
+
+        // EX N2 - Buscar direcciones de correo en un texto
+
+        var str = 'Una dirección de correo electrónico es la dirección que utiliza para recibir y enviar correos electrónicos. Se muestra a los destinatarios de sus correos electrónicos para que sepan quién le envió un correo electrónico. Cada dirección de correo electrónico sólo se puede asignar una vez en todo el mundo y, por lo tanto, está disponible exclusivamente para usted. No puede cambiar las direcciones de correo electrónico, pero puede eliminarlas en cualquier momento. Una dirección de correo electrónico consiste en el signo @ (arroba), el nombre de usuario delante y el dominio detrás, por ejemplo, nombre-de-usuario@ionos.es: La parte del dominio depende del dominio bajo el cual se crea la dirección de correo electrónico: en nuestro ejemplo es ionos.es. Esta información varía de proveedor a proveedor, por lo que una parte del dominio también puede ser gmail.com o gmx.es si utiliza una dirección de correo electrónico de estos proveedores. Si ha registrado su propio dominio, por ejemplo, www.el-nombre-de-sus-sueños.es, las direcciones de correo electrónico que configura para el dominio lo tienen como parte del dominio (nombre-de-usuario@el-nombre-de-sus-sueños.es o nombre-de-usuario@el-nombre-de-sus-sueños.ES). El nombre de usuario es la parte de una dirección de correo electrónico que puede seleccionar libremente en la medida de lo posible. Puede, por ejemplo, utilizar su propio nombre o el nombre o departamento de una empresa. Si utiliza una dirección de correo electrónico con un proveedor de correo como gmail.com o gmx.es, es posible que la combinación con la parte del dominio deseada ya esté registrada. En este caso, deberá considerar alternativas para el nombre de usuario de su dirección de correo electrónico. Si utiliza su propio dominio, estas restricciones no se aplican porque sólo usted puede crear direcciones de correo electrónico que coincidan con su propio dominio. En resumen, nombre-de-usuario@ionos.es es un email'; 
+
+        let pattern = /\b@\b/g;     // \b para indicar que está en medio de una palabra
+        let posiciones = [];        // Posiciones del texto donde hay una @
+        let direccion = "";         // compone la dirección de correo
+        let direcciones = [];       // guarda las direcciones de correo identificadas
+
+        // Recorre el string buscando las @ y guardando sus posiciones
+        while (pattern.test(str) == true) {
+
+            direccion = buscarUsuario(pattern.lastIndex - 1) + "@" + buscarDominio(pattern.lastIndex - 1);
+            guardarDireccion(direccion);
+
+        }
+
+        console.log(direcciones);
+
+        // Recorre el string desde la @ hacia atrás hasta encontrar el inicio de palabra
+        // El inicio de la palabra se determina al encontrar un caracter blanco, uno de los caracteres especiales o el inicio del string (posición 0)
+        function buscarUsuario(indice) {
+            let vDesde = 0;
+            let listaCaracteres = " ():/\\&%$";
+
+            for (let i = indice; listaCaracteres.indexOf(str[i]) == -1 && i >= 0; i--) { // indexOf devuelve -1 si no encuentra el caracter en el string
+                vDesde = i;
+            }
+            return str.substring(vDesde, indice); // Devuelve el substring entre vDesde hasta indice sin incluir el caracter de la posicion indice
+        }
+
+        // Recorre el string desde la @ hacia delante hasta encontrar el final de palabra
+        // EL final de la palabra se determina al encontrar un caracter blanco, uno de los caracteres especiales o el final del string
+        function buscarDominio(indice) {
+            let vhasta = 0;
+            let listaCaracteres = " ():/\\&%$";
+            for (let i = indice; listaCaracteres.indexOf(str[i]) == -1 && i < str.length ; i++) {
+                vHasta = i;
+            }
+            return str.substring(indice + 1, vHasta + 1);
+        }
+
+        function guardarDireccion(eMail) {
+            let i = 0;
+            for (i = 0; i < direcciones.length && direcciones[i] != eMail; i++) {
+            }
+
+            if (i == direcciones.length) {
+                direcciones.push(eMail);
+            }
+
+        }
+
+    </script>
+</body>
+</html>

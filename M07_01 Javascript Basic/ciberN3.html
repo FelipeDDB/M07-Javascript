@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M07_01 N3 JavaScript Bàsic</title>
+
+    <!-- Enlace al fichero de estilos CSS -->
+    <link rel="stylesheet" href="./ciberN3.css">
+
+</head>
+<body>
+    
+    <div style="padding-left: 60px;">
+        <h2>M07_01 N3 JavaScript Bàsic: CALCULADORA</h2>
+    </div>
+    
+
+    <div class="marco">
+        <button onclick='main("1")' style="top:10px; left:10px;">1</button>
+        <button onclick='main("2")' style="top:10px; left:70px;">2</button>
+        <button onclick='main("3")' style="top:10px; left:130px;">3</button>
+        <button onclick='main("4")' style="top:10px; left:190px;">4</button>
+        <button onclick='main("5")' style="top:10px; left:250px;">5</button>
+        <button onclick='main("6")' style="top:70px; left:10px;">6</button>
+        <button onclick='main("7")' style="top:70px; left:70px;">7</button>
+        <button onclick='main("8")' style="top:70px; left:130px;">8</button>
+        <button onclick='main("9")' style="top:70px; left:190px;">9</button>
+        <button onclick='main("0")' style="top:70px; left:250px;">0</button>
+        <button onclick='main("+")' style="top:150px; left:10px;">+</button>
+        <button onclick='main("-")' style="top:150px; left:70px;">-</button>
+        <button onclick='main("*")' style="top:150px; left:130px;">*</button>
+        <button onclick='main("/")' style="top:150px; left:190px;">/</button>
+        <button onclick='main("C")' style="top:150px; left:250px;">C</button>
+        <button onclick='main("=")' class="botonIgual">=</button>
+    </div>
+    <div class="marcoResultado">
+        <p id="op1" class="operando"></p>
+        <p id="operacion" class="operando"></p>
+        <p id="op2" class="operando"></p>
+        <p id="resultado"></p>
+    </div>
+    <div>
+        <p id="mensaje"></p>
+    </div>
+
+
+    <script>
+        // Variables globales para confeccionar operación 
+        let valor1 = "";
+        let valor2 = "";
+        let operacion = "";
+        let resuelto = 0; // Semáforo: 0 - Pendiente resolver  1 - Resuelto
+
+        function main(tecla) {
+            let resultado = 0;
+
+            // Si una vez resuelta la operación se toca una tecla, inicializa valores
+            if (resuelto == 1) {
+                inicializar();
+                pintaResultado(valor1,valor2,operacion,resultado);
+                pintaMensaje("");
+            }
+
+            if (tecla == "C") {
+                inicializar();
+            // Acciones al pulsar una tecla de operación
+            } else if (tecla == "+" || tecla == "-" || tecla == "*" || tecla == "/") {
+                if (valor1.length == 0) {
+                    pintaMensaje("Falta el primer operando");
+                } else {
+                    operacion = tecla;
+                    pintaMensaje("");
+                }
+            // Acciones al pulsar la tecla = para obtener resultado
+            } else if (tecla == "=") {
+                if (valor1.length == 0 || valor2.length == 0 || operacion.length == 0) {
+                    pintaMensaje("Ep! Falta algún operando o la operación");
+                } else if (operacion == "/" && parseInt(valor2) == 0) {
+                    pintaMensaje("Ep! no se puede dividir por 0");
+                    valor2 = "";
+                } else {
+                    resultado = calculadora(operacion, parseInt(valor1), parseInt(valor2));
+                    resuelto = 1;
+                    pintaMensaje("");
+                }
+            // Al pulsar una tecla numérica la acumula al string del operando que toque
+            } else {
+                if (operacion.length == 0) {
+                    valor1 += tecla;
+                } else {
+                    valor2 += tecla;
+                }
+                pintaMensaje("");
+            }
+
+            pintaResultado(valor1,valor2,operacion,resultado);
+        }
+
+        // Inicializar variables y display
+        function inicializar () {
+            valor1 = "";
+            valor2 = "";
+            operacion = "";
+            resuelto = 0;
+            pintaMensaje("");
+        }
+        // Función para actuallizar el display o presentar resultado
+        function pintaResultado (v1,v2,op,res) {
+            document.getElementById("op1").innerHTML = v1;
+            document.getElementById("op2").innerHTML = v2;
+            document.getElementById("operacion").innerHTML = op;
+            document.getElementById("resultado").innerHTML = res;
+        }
+ 
+        // mensajes de error
+        function pintaMensaje (vMensaje) {
+            document.getElementById("mensaje").innerHTML = vMensaje;
+        }
+
+        // Función que realiza el cálculo
+        function calculadora(operacion, v1, v2) {
+            
+            let res; // variable resultado
+
+            switch (operacion.trim()) {
+                case "+":
+                    res = v1 + v2;
+                break;
+                case "-":
+                    res = v1 - v2;
+                break;
+                case "*":
+                    res = v1 * v2;
+                break;
+                case "/":
+                    res = v1 / v2;
+                break;
+            }
+
+            return res;
+        }
+
+    </script>
+</body>
+</html>
