@@ -1,0 +1,49 @@
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4em;
+}
+.lista {
+    padding: 0;
+}
+
+/* Estilo por defecto de cada una de las estrellas */
+.rating{
+    cursor: pointer;
+    color:grey;
+    transition: transform 1s;
+}
+/* Efecto rotación al pasar el cursor por encima */
+.rating:hover {
+    transform: rotate(360deg);
+}
+
+/* Estilo de las estrellas una vez seleccionadas */
+.seleccionado{
+    cursor: pointer;
+    color: goldenrod;
+    transition: transform 1s;
+}
+/* Efecto rotación al pasar el cursor por encima */
+.seleccionado:hover {
+    transform: rotate(360deg);
+}
+
+/* Color destacado al pasar el ratón sobre una estrella */
+i:hover {
+    color: goldenrod;
+}
+
+/* Para resaltar los anteriores a la estrella por la que pasa el ratón: */
+/* 1 Destacamos toda la lista */
+/* 2 Volvemos al color por defecto todos los "elementos hermano" posteriores (el resto de estrellas) */
+.lista:hover i{
+    color: goldenrod;    
+}
+.lista i:hover ~i{
+    color: grey;    
+}
+
+
